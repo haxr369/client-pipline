@@ -2,6 +2,9 @@
 
 ## Git Repository Fork
 
+- 내 리포지토리로 포크
+- 내 리포지토리를 git clone
+
 ## 파이프라인 생성
 
 - AWS 콘솔 -> CodePipeline
