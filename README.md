@@ -3,7 +3,6 @@
 ## Git Repository Fork
 
 - 내 리포지토리로 포크
-- 내 리포지토리를 git clone
 
 ## 파이프라인 생성
 
@@ -19,10 +18,10 @@
 - 새 앱 설치 버튼
 - gitHub 로그인
 - Only select repositories
-- Select repositores에서 deploy-automation 선택
+- Select repositores에서 client-pipeline 선택
 - Save 버튼
 - 연결 버튼
-- 레포지토리 이름 지정 your_github_ideploy-automation
+- 레포지토리 이름 지정 your_github_client-pipeline
 - 파이프라인 트리거 지정
   - 브랜치 내 푸쉬
 - 브랜치 이름 지정
@@ -57,3 +56,21 @@
 
 - 환경변수에서 url 뒤 `/` 없는거 확인
 - 파이프라인 생성 버튼
+
+## 코드 변경 후 테스트
+
+- 포크해온 레포지토리를 EC2에서 git clone
+- git config --global user.name "Your Name"
+- git config credential.helper cache
+
+  - 인증 후 기본 15분 접속정보 유지
+
+- 코드 변경 후 `git add .`, `git push origin main`
+- username 입력
+- userpassword
+  - github 프로필 -> settings
+  - Developer Settings
+  - Personal access tokens (classic)
+  - Generate new token (classic)
+    - repo 선택 후 생성
+    - token 값 password에 입력
