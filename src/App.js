@@ -3,6 +3,7 @@ import "./App.css";
 
 // 'REACT_APP_' prefix 필수
 const { REACT_APP_API_URL } = process.env;
+console.log({ REACT_APP_API_URL });
 function App() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
@@ -49,7 +50,26 @@ function App() {
 
   const deleteNotes = () => {
     console.log("[deleteNotes] delete ALL notes");
-    setNotes([]);
+    fetch(`${REACT_APP_API_URL}/notes`, {
+      method: "DELETE",
+    }).then((res) => {
+      console.log(res);
+      setNotes([]);
+    });
+  };
+
+  const requestAIAdvice = (usernote, noteId) => {
+    fetch(`${process.env.REACT_APP_API_URL}/ainotes`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: { usernote: usernote, noteId: noteId } }),
+    })
+      .then(() => {
+        fetchNotes();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -69,9 +89,23 @@ function App() {
       <div>
         {notes.map((note) => (
           <div key={note.id} className="note">
-            <button onClick={() => deleteNote(note.id)}>삭제</button>
-            <div>
+            <div className="note-content">
               <strong>사용자 메모:</strong> {note.user_note}
+            </div>
+            {note.ai_note ? (
+              <div className="ai-note">
+                <strong>AI 추천 학습 내용:</strong> {note.ai_note}
+              </div>
+            ) : null}
+            <div className="note-actions">
+              {!note.ai_note && (
+                <button
+                  onClick={() => requestAIAdvice(note.user_note, note.id)}
+                >
+                  AI 조언 요청
+                </button>
+              )}
+              <button onClick={() => deleteNote(note.id)}>삭제</button>
             </div>
           </div>
         ))}
