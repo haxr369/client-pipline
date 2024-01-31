@@ -76,6 +76,7 @@ function App() {
     <div className="App">
       <h1>학습 기록 애플리케이션</h1>
       <h3>오늘 학습한 내용을 기록해보세요.</h3>
+      <h3>밤새도록 공부해보세요!</h3>
       <textarea
         value={newNote}
         onChange={(e) => setNewNote(e.target.value)}
